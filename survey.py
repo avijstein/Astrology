@@ -1,6 +1,4 @@
 import sys, os, re
-import numpy as np
-import pandas as pd
 import wikipedia
 os.chdir('/Users/ajstein/Desktop/Real Life/Coding Projects/Astrology/')
 
@@ -25,10 +23,8 @@ def extract_first_lines(list_of_names, number_of_names):
                 pass
 
 
-clear_file()
-extract_first_lines(astros, 30)
-
-
+# clear_file()
+# extract_first_lines(astros, len(astros))
 
 
 
