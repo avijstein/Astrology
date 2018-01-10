@@ -1,5 +1,6 @@
 setwd('~/Desktop/Real Life/Coding Projects/Astrology/')
 library(tidyverse)
+library(lubridate)
 
 #### Initial Wikipedia Data Clean Up ####
 
@@ -32,6 +33,30 @@ dates = dates %>%
   mutate(new_date = gsub(new_date, pattern = 'NA', replacement = '')) %>%
   select(-c(date1, date2))
 
+
+zodiac = data.frame('sign' = c('Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'),
+                    'start_dates' = c('Mar 21', 'Apr 21', 'May 21', 'Jun 22', 'Jul 23', 'Aug 24', 'Sep 24', 'Oct 24', 'Nov 23', 'Dec 22', 'Jan 21', 'Feb 19'))
+
+zodiac = zodiac %>%
+  mutate(
+    start_dates = as.Date(start_dates, format = '%b %d'),
+    end_dates = start_dates - 1,
+    end_dates = c(end_dates[-1], end_dates[1]),
+    start = yday(start_dates),
+    end = yday(end_dates)
+  ) %>%
+  mutate(
+    count = table(cut(as.numeric(yday(dates$new_date)), breaks = end), useNA = 'ifany'),
+    count = as.integer(count)
+  ) %>%
+  arrange(-count)
+
+
+ggplot(data = zodiac) + 
+  geom_bar(aes(x = sign, y = count, fill = sign), stat = 'identity') +
+  scale_fill_discrete() +
+  labs(x='Zodiac Sign', y='Count', title='Astrological Signs of Famous Astronomers') +
+  theme_minimal()
 
 
 
