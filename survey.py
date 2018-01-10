@@ -39,11 +39,14 @@ def regex():
         date1 = re.search('\d{1,2} [A-Z][a-z]+ \d{4}', lines[i])
         date2 = re.search('\w+ \d{1,2}, \d{4}', lines[i])
         if date1 != None:
-            print(num, ":", date1.group())
-            dates.append(str(num + ": " + date1.group()))
+            date1 = date1.group()
+            print(num, ":", date1)
+            dates.append(date1)
         if date2 != None:
-            print(num, ":", date2.group())
-            dates.append(str(num + ": " + date2.group()))
+            date2 = date2.group()
+            date2 = date2.replace(',', '')
+            print(num, ":", date2)
+            dates.append(date2)
     return(dates)
 
 
@@ -54,7 +57,7 @@ def writing_dates(dates):
 
 
 
-writing_dates(regex())
+# writing_dates(regex())
 
 
 
