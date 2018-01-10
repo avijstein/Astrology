@@ -2,7 +2,6 @@ import sys, os, re
 import wikipedia
 os.chdir('/Users/ajstein/Desktop/Real Life/Coding Projects/Astrology/')
 
-
 def reading_names():
     loa = open('clean_names.csv')
     astros = [line[:-1] for line in list(loa)][1:]
@@ -21,14 +20,43 @@ def extract_first_lines(list_of_names, number_of_names):
                 first_sentence = wikipedia.summary(list_of_names[i], sentences = 1)
                 print(first_sentence)
                 f.write(str(i) + ': ' + first_sentence + '\n')
-
             except:
                 pass
 
+def reading_sums():
+    f = open('firstline.csv')
+    summaries = [line[:-1] for line in list(f)]
+    f.close()
+    return(summaries)
 
-# reading_names()
-# clear_file()
-# extract_first_lines(astros, len(astros))
+
+def regex():
+    dates = []
+    lines = reading_sums()
+
+    for i in range(0, len(lines)):
+        num = re.match('\d*', lines[i]).group()
+        date1 = re.search('\d{1,2} [A-Z][a-z]+ \d{4}', lines[i])
+        date2 = re.search('\w+ \d{1,2}, \d{4}', lines[i])
+        if date1 != None:
+            print(num, ":", date1.group())
+            dates.append(str(num + ": " + date1.group()))
+        if date2 != None:
+            print(num, ":", date2.group())
+            dates.append(str(num + ": " + date2.group()))
+    return(dates)
+
+
+def writing_dates(dates):
+    with open('dates.csv', 'w') as f:
+        for i in range(0, len(dates)):
+            f.write(dates[i] + '\n')
+
+
+
+writing_dates(regex())
+
+
 
 
 
