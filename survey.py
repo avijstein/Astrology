@@ -2,9 +2,12 @@ import sys, os, re
 import wikipedia
 os.chdir('/Users/ajstein/Desktop/Real Life/Coding Projects/Astrology/')
 
-loa = open('clean_names.csv')
-astros = [line[:-1] for line in list(loa)][1:]
-print(astros)
+
+def reading_names():
+    loa = open('clean_names.csv')
+    astros = [line[:-1] for line in list(loa)][1:]
+    loa.close()
+    print(astros)
 
 def clear_file():
     f = open('firstline.csv', 'w')
@@ -23,6 +26,7 @@ def extract_first_lines(list_of_names, number_of_names):
                 pass
 
 
+# reading_names()
 # clear_file()
 # extract_first_lines(astros, len(astros))
 
