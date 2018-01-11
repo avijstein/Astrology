@@ -38,8 +38,8 @@ def regex():
 
     for i in range(0, len(lines)):
         num = re.match('\d*', lines[i]).group()
-        date1 = re.search('\d{1,2} [A-Z][a-z]+ \d{4}', lines[i])
-        date2 = re.search('\w+ \d{1,2}, \d{4}', lines[i])
+        date1 = re.search('\d{1,2} [A-Z][a-z]+ \d{3,4}', lines[i])
+        date2 = re.search('[A-Z][a-z]+ \d{1,2}, \d{3,4}', lines[i])
         if date1 != None:
             date1 = date1.group()
             print(num, ":", date1)
@@ -56,8 +56,9 @@ def writing_dates(dates):
         for i in range(0, len(dates)):
             f.write(dates[i] + '\n')
 
-astros = reading_names()
-# extract_first_lines(astros, len(astros))
+
+
+
 
 # writing_dates(regex())
 
