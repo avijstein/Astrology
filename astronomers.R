@@ -24,7 +24,7 @@ names(astronames) = 'Names'
 
 #### Date Handling and Analysis ####
 
-dates = read_csv('dates.csv', col_names = c('dates'))
+dates = read_csv('uni_dates.csv', col_names = c('dates'))
 
 dates = dates %>% 
   mutate('date1' = as.Date(dates$dates, format = '%d %B %Y'),
@@ -32,6 +32,22 @@ dates = dates %>%
   mutate('new_date' = paste0(date1, date2)) %>%
   mutate(new_date = gsub(new_date, pattern = 'NA', replacement = '')) %>%
   select(-c(date1, date2))
+
+
+chinese = data.frame('cycle' = seq(0,11),
+                     'animals' = c('Monkey', 'Rooster', 'Dog', 'Pig', 'Rat', 'Ox', 'Tiger', 'Rabbit', 'Dragon', 'Snake', 'Horse', 'Goat'),
+                     stringsAsFactors = F)
+
+dates = dates %>%
+  mutate(
+    century = ceiling(year(new_date)/100),
+    leap = year(new_date)/4 == round(year(new_date)/4),
+    animal = year(new_date)%%12
+  ) %>%
+  rowwise() %>%
+  mutate(
+    animal = chinese[chinese$cycle == animal,]$animals
+  )
 
 
 zodiac = data.frame('sign' = c('Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'),
@@ -52,21 +68,32 @@ zodiac = zodiac %>%
   arrange(-count)
 
 
-ggplot(data = zodiac) + 
-  geom_bar(aes(x = factor(sign, levels = sign[order(count)]), y = count, fill = count), stat = 'identity') +
-  scale_fill_continuous(guide = F) +
-  coord_flip() +
-  labs(x='Zodiac Sign', y='Count', title='Astrological Signs of Famous Astronomers') +
-  theme_minimal()
+
+dates %>%
+  mutate(
+    dayofyear = yday(new_date)
+  )
 
 
-# Statistics #
+
+# Statistics and Graphing #
 sigma = function(set, sds){
   x = mean(set); s = sd(set)
   lower = x - sds*s
   upper = x + sds*s
   return(c(lower, upper))
 }
+
+s = sigma(zodiac$count, 2)
+
+
+ggplot(data = zodiac, aes(x = factor(sign, levels = sign[order(count)]), y = count)) + 
+  geom_bar(aes(fill = count), stat = 'identity') +
+  # geom_hline(yintercept = s[1]) + geom_hline(yintercept = s[2]) +
+  scale_fill_continuous(guide = F) +
+  coord_flip() +
+  labs(x='Zodiac Sign', y='Count', title='Astrological Signs of Famous Astronomers') +
+  theme_minimal()
 
 
 
