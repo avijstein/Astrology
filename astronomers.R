@@ -53,10 +53,20 @@ zodiac = zodiac %>%
 
 
 ggplot(data = zodiac) + 
-  geom_bar(aes(x = sign, y = count, fill = sign), stat = 'identity') +
-  scale_fill_discrete() +
+  geom_bar(aes(x = factor(sign, levels = sign[order(count)]), y = count, fill = count), stat = 'identity') +
+  scale_fill_continuous(guide = F) +
+  coord_flip() +
   labs(x='Zodiac Sign', y='Count', title='Astrological Signs of Famous Astronomers') +
   theme_minimal()
+
+
+# Statistics #
+sigma = function(set, sds){
+  x = mean(set); s = sd(set)
+  lower = x - sds*s
+  upper = x + sds*s
+  return(c(lower, upper))
+}
 
 
 

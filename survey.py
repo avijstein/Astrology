@@ -7,17 +7,19 @@ def reading_names():
     astros = [line[:-1] for line in list(loa)][1:]
     loa.close()
     print(astros)
+    return(astros)
 
 def clear_file():
     f = open('firstline.csv', 'w')
     f.close()
 
 def extract_first_lines(list_of_names, number_of_names):
-    with open('firstline.csv', 'a') as f:
+    with open('unicodeless.csv', 'a') as f:
         for i in range(0, number_of_names):
             print(str(i) + ': ' + list_of_names[i])
             try:
                 first_sentence = wikipedia.summary(list_of_names[i], sentences = 1)
+                first_sentence = str(first_sentence.encode('ascii', 'ignore'))
                 print(first_sentence)
                 f.write(str(i) + ': ' + first_sentence + '\n')
             except:
@@ -49,13 +51,13 @@ def regex():
             dates.append(date2)
     return(dates)
 
-
 def writing_dates(dates):
     with open('dates.csv', 'w') as f:
         for i in range(0, len(dates)):
             f.write(dates[i] + '\n')
 
-
+astros = reading_names()
+# extract_first_lines(astros, len(astros))
 
 # writing_dates(regex())
 
