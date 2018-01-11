@@ -3,10 +3,9 @@ import wikipedia
 os.chdir('/Users/ajstein/Desktop/Real Life/Coding Projects/Astrology/')
 
 def reading_names():
-    loa = open('clean_names.csv')
-    astros = [line[:-1] for line in list(loa)][1:]
-    loa.close()
-    print(astros)
+    f = open('clean_names.csv')
+    astros = [line[:-1] for line in list(f)][1:]
+    f.close()
     return(astros)
 
 def clear_file():
@@ -25,16 +24,11 @@ def extract_first_lines(list_of_names, number_of_names):
             except:
                 pass
 
-def reading_sums():
-    f = open('firstline.csv')
-    summaries = [line[:-1] for line in list(f)]
-    f.close()
-    return(summaries)
-
-
 def regex():
     dates = []
-    lines = reading_sums()
+    f = open('unicodeless.csv')
+    lines = [line[:-1] for line in list(f)]
+    f.close()
 
     for i in range(0, len(lines)):
         num = re.match('\d*', lines[i]).group()
@@ -52,11 +46,9 @@ def regex():
     return(dates)
 
 def writing_dates(dates):
-    with open('dates.csv', 'w') as f:
+    with open('uni_dates.csv', 'w') as f:
         for i in range(0, len(dates)):
             f.write(dates[i] + '\n')
-
-
 
 
 
