@@ -16,15 +16,15 @@ The project intends to analyze the astrological symbols of famous astronomers. T
 
 ### Graphs
 
-![Zodiac Distribution](Images/second_capture.png)
+![Zodiac Distribution](Images/zodiacs.png)
 
-As we see above, there are no obvious anomalies popping out of the data. At the 2-$\sigma$ level (horizontal black lines), we see that all zodiac categories fall with the range.
+As we see above, there are no obvious anomalies popping out of the data. At the 2-Sigma level (horizontal black lines), we see that all zodiac categories fall with the range.
 
 If we look at the Chinese zodiac instead, we find a point of interest:
 
 ![Chinese Zodiac](Images/chinese_zodiac.png)
 
-We see a similar pattern (or lack there of) in the Chinese zodiac symbols. However, we notice that 'Horse' stands slightly above the 2-$\sigma$ level (horizontal black lines)! While it's well within the 3-$\sigma$ level, this warrants further study.
+While we see a similar pattern (or lack there of) in the Chinese zodiac symbols as well, we notice that 'Horse' stands slightly above the 2-Sigma level (horizontal black lines)! While it's well within the 3-Sigma level, this warrants further study.
 
 
 
