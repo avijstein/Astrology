@@ -1,6 +1,8 @@
 setwd('~/Desktop/Real Life/Coding Projects/Astrology/')
 library(tidyverse)
 library(lubridate)
+library(png)
+library(grid)
 
 #### Initial Wikipedia Data Clean Up ####
 
@@ -42,6 +44,7 @@ dates = dates %>%
   mutate(
     century = ceiling(year(new_date)/100),
     leap = year(new_date)/4 == round(year(new_date)/4),
+    dayofweek = weekdays(as.Date(new_date)),
     animal = year(new_date)%%12
   ) %>%
   rowwise() %>%
@@ -102,4 +105,39 @@ ggplot(data = dates) +
   labs(x = 'Animal', y = 'Count', title = 'Chinese Zodiacs of Historical Astronomers') + 
   theme_minimal()
 # ggsave('Images/chinese_zodiac.png')
+
+
+setwd('zodiac_images/')
+files = list.files()
+pics = lapply(files, FUN = readPNG)
+imgs = lapply(pics, FUN = function(x) rasterGrob(x, interpolate = T))
+setwd('../')
+
+
+ggplot(data = zodiac, aes(x = factor(sign, levels = sign[order(-count)]), y = count)) + 
+  geom_bar(aes(fill = count), stat = 'identity') +
+  # annotate('rect', xmin = .55, xmax = 1.45, ymin = 0, ymax = 10) +
+  annotation_custom(imgs[[1]], xmin=.6, xmax=1.4, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[2]], xmin=1.5, xmax=2.5, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[3]], xmin=2.5, xmax=3.5, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[4]], xmin=3.5, xmax=4.5, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[5]], xmin=4.5, xmax=5.5, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[6]], xmin=5.5, xmax=6.5, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[7]], xmin=6.5, xmax=7.5, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[8]], xmin=7.5, xmax=8.5, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[9]], xmin=8.5, xmax=9.5, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[10]], xmin=9.5, xmax=10.5, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[11]], xmin=10.5, xmax=11.5, ymin= 0, ymax=10) +
+  annotation_custom(imgs[[12]], xmin=11.5, xmax=12.5, ymin= 0, ymax=10) +
+  # geom_hline(yintercept = sigma(zodiac$count, 2)[1]) + geom_hline(yintercept = sigma(zodiac$count, 2)[2]) +
+  scale_fill_continuous(guide = F) +
+  labs(x='Zodiac Sign', y='Count', title='Astrological Signs of Historical Astronomers') +
+  lims(y = c(0, max(zodiac$count) + 10)) +
+  theme_minimal()
+
+
+
+
+
+
 
