@@ -31,18 +31,14 @@ def regex():
     f.close()
 
     for i in range(0, len(lines)):
-        num = re.match('\d*', lines[i]).group()
-        date1 = re.search('\d{1,2} [A-Z][a-z]+ \d{3,4}', lines[i])
-        date2 = re.search('[A-Z][a-z]+ \d{1,2}, \d{3,4}', lines[i])
-        if date1 != None:
-            date1 = date1.group()
-            print(num, ":", date1)
-            dates.append(date1)
-        if date2 != None:
-            date2 = date2.group()
-            date2 = date2.replace(',', '')
-            print(num, ":", date2)
-            dates.append(date2)
+        num = re.match('\d*', lines[i])
+        date = re.search('([A-Z][a-z]+ \d{1,2}, \d{3,4}|\d{1,2} [A-Z][a-z]+ \d{3,4})', lines[i])
+        if date != None:
+            init_date = re.search('\d{3,4}', lines[i][num.end():date.start()])
+            if init_date == None:
+                print(num.group(), ':', date.group())
+                date = date.group().replace(',', '')
+                dates.append(date)
     return(dates)
 
 def writing_dates(dates):

@@ -88,7 +88,7 @@ sigma = function(set, sds){
 }
 
 s = sigma(zodiac$count, 2)
-sigma(table(dates$animal), 3)
+sigma(table(dates$animal), 2)
 
 ggplot(data = zodiac, aes(x = factor(sign, levels = sign[order(-count)]), y = count)) + 
   geom_bar(aes(fill = count), stat = 'identity') +
