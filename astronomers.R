@@ -85,15 +85,21 @@ sigma = function(set, sds){
 }
 
 s = sigma(zodiac$count, 2)
+sigma(table(dates$animal), 3)
 
-
-ggplot(data = zodiac, aes(x = factor(sign, levels = sign[order(count)]), y = count)) + 
+ggplot(data = zodiac, aes(x = factor(sign, levels = sign[order(-count)]), y = count)) + 
   geom_bar(aes(fill = count), stat = 'identity') +
-  # geom_hline(yintercept = s[1]) + geom_hline(yintercept = s[2]) +
+  geom_hline(yintercept = sigma(zodiac$count, 2)[1]) + geom_hline(yintercept = sigma(zodiac$count, 2)[2]) +
   scale_fill_continuous(guide = F) +
-  coord_flip() +
-  labs(x='Zodiac Sign', y='Count', title='Astrological Signs of Famous Astronomers') +
+  labs(x='Zodiac Sign', y='Count', title='Astrological Signs of Historical Astronomers') +
   theme_minimal()
 
 
+ggplot(data = dates) +
+  geom_bar(aes(x = animal, fill = animal)) +
+  geom_hline(yintercept = sigma(table(dates$animal), 2)[1]) + geom_hline(yintercept = sigma(table(dates$animal), 2)[2]) +
+  scale_fill_discrete(name = 'Animal', guide = F) +
+  labs(x = 'Animal', y = 'Count', title = 'Chinese Zodiacs of Historical Astronomers') + 
+  theme_minimal()
+# ggsave('Images/chinese_zodiac.png')
 
