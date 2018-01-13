@@ -12,7 +12,20 @@ The project intends to analyze the astrological symbols of famous astronomers. T
 
 **Regex:** Now with a long list of first sentences (736 of them), I used regular expressions to pull out dates, formatted similar to 23 July 1922 or July 23, 1922. After a bit more experimenting, I didn't find any dates formatted differently. If there were multiple dates in a sentence, such as "July 23, 1922 -- August 21, 1992," the regex pulled the first date, presuming it to be the birthdate.
 
-**Dates:** I imported the list of dates into R, and converted the date strings into Date objects. Using the day of the year, I sorted each date into its respective zodiac symbol category. I aggregated the data, and found the distribution of zodiac signs.
+**Dates:** I imported the list of dates into R, and converted the date strings into Date objects. Using the day of the year, I binned each date into its respective zodiac symbol category. I aggregated the data, and found the distribution of zodiac signs.
+
+### Graphs
+
+![Zodiac Distribution](Images/second_capture.png)
+
+As we see above, there are no obvious anomalies popping out of the data. At the 2-$\sigma$ level (horizontal black lines), we see that all zodiac categories fall with the range.
+
+If we look at the Chinese zodiac instead, we find a point of interest:
+
+![Chinese Zodiac](Images/chinese_zodiac.png)
+
+We see a similar pattern (or lack there of) in the Chinese zodiac symbols. However, we notice that 'Horse' stands above the 2-$\sigma$ level (horizontal black lines)! While it's well within the 3-$\sigma$ level, this warrants further study.
+
 
 
 
