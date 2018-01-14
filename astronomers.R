@@ -103,7 +103,7 @@ ggplot(data = dates) +
   geom_hline(yintercept = sigma(table(dates$animal), 2)[1]) + geom_hline(yintercept = sigma(table(dates$animal), 2)[2]) +
   scale_fill_discrete(name = 'Animal', guide = F) +
   labs(x = 'Animal', y = 'Count', title = 'Chinese Zodiacs of Historical Astronomers') + 
-  theme_minimal()
+  theme_minimal() + theme(axis.title.x = element_text(margin = margin(t = 10)))
 # ggsave('Images/chinese_zodiac.png')
 
 
@@ -122,8 +122,8 @@ ggplot(data = zodiac, aes(x = factor(sign, levels = sign[order(-count)]), y = co
   notes + geom_hline(yintercept = sigma(zodiac$count, 2)[1]) + geom_hline(yintercept = sigma(zodiac$count, 2)[2]) +
   scale_fill_continuous(guide = F) +
   labs(x='Zodiac Sign', y='Count', title='Astrological Signs of Historical Astronomers') +
-  lims(y = c(0, max(zodiac$count) + 10)) +
-  theme_minimal()
+  lims(y = c(0, max(zodiac$count) + 5)) +
+  theme_minimal() + theme(axis.title.x = element_text(margin = margin(t = 10)))
 # ggsave('Images/zodiacs.png')
 
 
