@@ -109,31 +109,22 @@ ggplot(data = dates) +
 
 setwd('zodiac_images/')
 files = list.files()
-files = files[c(2,1,3:12)]
+files = files[c(8,11,6,1,5,12,7,10,9,2,4,3)]
 pics = lapply(files, FUN = readPNG)
 imgs = lapply(pics, FUN = function(x) rasterGrob(x, interpolate = T))
 setwd('../')
-
-
-test = list(
-  'a' = seq(1,12),
-  'b' = letters[1:5],
-  'c' = seq(2,20,2)
-)
-
-test[c(2,1,3)]
 
 
 notes = lapply(seq(1,12), FUN = function(x) annotation_custom(imgs[[x]], xmin = x-.45, xmax = x+.45, ymin = 0, ymax = 10))
 
 ggplot(data = zodiac, aes(x = factor(sign, levels = sign[order(-count)]), y = count)) + 
   geom_bar(aes(fill = count), stat = 'identity') +
-  notes +
+  notes + geom_hline(yintercept = sigma(zodiac$count, 2)[1]) + geom_hline(yintercept = sigma(zodiac$count, 2)[2]) +
   scale_fill_continuous(guide = F) +
   labs(x='Zodiac Sign', y='Count', title='Astrological Signs of Historical Astronomers') +
   lims(y = c(0, max(zodiac$count) + 10)) +
   theme_minimal()
-
+# ggsave('Images/zodiacs.png')
 
 
 
