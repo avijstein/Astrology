@@ -6,7 +6,7 @@ The project intends to analyze the astrological symbols of famous astronomers. T
 
 **Names:** After copying the list of astronomers into Excel, I used a manual version of regular expressions to grab just the names of the astronomers (this file is `justnames.csv`).
 
-**Wikipedia:** Using the wikipedia package for python, I gathered wikipedia pages with the list of names. I only read in the first sentence of each of the wikipedia articles, since the birthdate, if known, is almost always in the first sentence. For some articles, the sentence ended abruptly, as the wikipedia package thought "Dr." was the complete sentence, rather than "Dr. Astronomer was born on 23 July 1922." However, these occurrences were relatively infrequent and didn't diminish the results significantly.
+**Wikipedia:** Using the wikipedia package for python, I gathered wikipedia pages with the list of names. I only collected the first sentence of each of the wikipedia articles, since the birthdate is almost always in the first sentence (if known). For some articles, the sentence ended abruptly, as the wikipedia package thought "Dr." was the complete sentence, rather than "Dr. Astronomer was born on 23 July 1922." However, these occurrences were relatively infrequent and didn't diminish the results significantly.
 
 **Unicode:** A major roadblock was that the first sentence would often contain a unicode character that couldn't be parsed, and the code would throw a `UnicodeEncodingError`. Fortunately, I was able to have it ignore those characters, and improved the capture rate from 20.4% to 94% of articles.
 
@@ -25,6 +25,19 @@ If we look at the Chinese zodiac instead, we find a point of interest:
 ![Chinese Zodiac](Images/chinese_zodiac.png)
 
 While we see a similar pattern (or lack there of) in the Chinese zodiac symbols as well, we notice that 'Horse' stands slightly above the 2-Sigma level (horizontal black lines)! While it's well within the 3-Sigma level, this warrants further study.
+
+![Day of Week](Images/dayofweek.png)
+
+When we break down the dates into the days of the week, we notice that 'Saturday' is *slightly* outside the 2-Sigma level. This could partly be explained by an increase in births during the week, and will need to be controlled for during follow up investigations.
+
+
+
+
+
+
+
+
+
 
 
 
