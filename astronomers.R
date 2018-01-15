@@ -72,14 +72,7 @@ zodiac = zodiac %>%
 
 
 
-dates %>%
-  mutate(
-    dayofyear = yday(new_date)
-  )
-
-
-
-# Statistics and Graphing #
+#### Statistics and Graphing ####
 sigma = function(set, sds){
   x = mean(set); s = sd(set)
   lower = x - sds*s
@@ -87,17 +80,8 @@ sigma = function(set, sds){
   return(c(lower, upper))
 }
 
-s = sigma(zodiac$count, 2)
-sigma(table(dates$animal), 2)
 
-ggplot(data = zodiac, aes(x = factor(sign, levels = sign[order(-count)]), y = count)) + 
-  geom_bar(aes(fill = count), stat = 'identity') +
-  geom_hline(yintercept = sigma(zodiac$count, 2)[1]) + geom_hline(yintercept = sigma(zodiac$count, 2)[2]) +
-  scale_fill_continuous(guide = F) +
-  labs(x='Zodiac Sign', y='Count', title='Astrological Signs of Historical Astronomers') +
-  theme_minimal()
-
-
+# Chinese Zodiac #
 ggplot(data = dates) +
   geom_bar(aes(x = animal, fill = animal)) +
   geom_hline(yintercept = sigma(table(dates$animal), 2)[1]) + geom_hline(yintercept = sigma(table(dates$animal), 2)[2]) +
@@ -107,15 +91,29 @@ ggplot(data = dates) +
 # ggsave('Images/chinese_zodiac.png')
 
 
+# Day of Week #
+week_df = data.frame(table(dates$dayofweek)) %>%
+  setNames(c('day', 'count')) %>%
+  slice(match(day[c(4,2,6,7,5,1,3)], day))
+
+ggplot(data = week_df) +
+  geom_bar(aes(x = factor(day, levels = week_df$day), y = count, fill = factor(day, levels = week_df$day)), stat = 'identity') +
+  geom_hline(yintercept = sigma(week_df$count, 2)[1]) + geom_hline(yintercept = sigma(week_df$count, 2)[2]) +
+  scale_fill_discrete(name = 'Day of Week', guide = F) +
+  labs(x = 'Day of Week', y = 'Count', title = 'Birth Day of Historical Astronomers') + 
+  theme_minimal() + theme(axis.title.x = element_text(margin = margin(t = 10)))
+# ggsave('Images/dayofweek.png')
+
+
+# Astrological Zodiac #
 setwd('zodiac_images/')
 files = list.files()
 files = files[c(8,11,6,1,5,12,7,10,9,2,4,3)]
 pics = lapply(files, FUN = readPNG)
 imgs = lapply(pics, FUN = function(x) rasterGrob(x, interpolate = T))
 setwd('../')
-
-
 notes = lapply(seq(1,12), FUN = function(x) annotation_custom(imgs[[x]], xmin = x-.45, xmax = x+.45, ymin = 0, ymax = 10))
+
 
 ggplot(data = zodiac, aes(x = factor(sign, levels = sign[order(-count)]), y = count)) + 
   geom_bar(aes(fill = count), stat = 'identity') +
