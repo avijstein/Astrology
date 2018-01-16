@@ -92,7 +92,32 @@ ggplot(data = dates) +
 
 
 # Day of Week #
-week_df = data.frame(table(dates$dayofweek)) %>%
+
+short_term = data.frame(table(dates %>% filter(new_date > 1910) %>% select(dayofweek))) %>%
+  setNames(c('day', 'count')) %>%
+  slice(match(day[c(4,2,6,7,5,1,3)], day)) %>%
+  mutate(ratio = count / mean(count), term = 'short')
+
+long_term = data.frame(table(dates %>% filter(new_date < 1910) %>% select(dayofweek))) %>%
+  setNames(c('day', 'count')) %>%
+  slice(match(day[c(4,2,6,7,5,1,3)], day)) %>%
+  mutate(ratio = count / mean(count), term = 'long')
+
+all_term = data.frame(table(dates %>% select(dayofweek))) %>%
+  setNames(c('day', 'count')) %>%
+  slice(match(day[c(4,2,6,7,5,1,3)], day)) %>%
+  mutate(ratio = count / mean(count), term = 'all')
+
+comp_term = rbind(short_term, long_term, all_term)
+
+ggplot(data = comp_term) +
+  geom_bar(aes(x = factor(day, levels = day), y = ratio, fill = factor(term)), stat = 'identity', position = 'dodge') +
+  # scale_fill_discrete(name = 'Day of Week', guide = F) +
+  labs(x = 'Day of Week', y = 'Count', title = 'Birth Day of Historical Astronomers') + 
+  theme_minimal()
+
+
+week_df = data.frame(table(dates %>% select(dayofweek))) %>%
   setNames(c('day', 'count')) %>%
   slice(match(day[c(4,2,6,7,5,1,3)], day))
 

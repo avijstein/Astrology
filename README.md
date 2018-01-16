@@ -28,18 +28,19 @@ While we see a similar pattern (or lack there of) in the Chinese zodiac symbols 
 
 ![Day of Week](Images/dayofweek.png)
 
-When we break down the dates into the days of the week, we notice that 'Saturday' is *slightly* outside the 2-Sigma level. This could partly be explained by an increase in births during the week, and will need to be controlled for during follow up investigations.
+When we break down the dates into the days of the week, we notice that 'Saturday' is *slightly* outside the 2-Sigma level. This could partly be explained by an [increase in births during the week][1], and will need to be controlled for during follow up investigations.
+
+
+### Further Analysis
+
+**Day of Week:** Although there is a trend towards more weekday births, I don't believe this is a significant influence in this study. Studies of birth date patterns show both Sunday and Saturday with considerably fewer than expected birthdays, with Sunday more heavily depressed. The long-term studies I found traced this pattern back to 1910, but weren't able to gather sufficient data before then. I split my data into pre-1910 and post-1910 (about 36% of total) births and compared the ratio of births per day for each set. The pre-1910 data have fewer births on Sundays than expected, while post-1910 data have slightly more than average. Both show fewer Saturday births than expected, to varying degrees.
 
 
 
 
 
 
-
-
-
-
-
+[1]: https://www.sciencedirect.com/science/article/pii/S1526952304004490
 
 
 <!-- bottom -->
