@@ -81,10 +81,18 @@ sigma = function(set, sds){
 }
 
 
+
 # Chinese Zodiac #
-ggplot(data = dates) +
-  geom_bar(aes(x = animal, fill = animal)) +
-  geom_hline(yintercept = sigma(table(dates$animal), 2)[1]) + geom_hline(yintercept = sigma(table(dates$animal), 2)[2]) +
+
+chinese = chinese %>%
+  inner_join(y = data.frame(table(dates %>% select(animal))) %>%
+                 setNames(c('animals', 'count')) %>%
+                 mutate(animals = as.character(animals)), 
+             by = 'animals')
+
+ggplot(data = chinese) +
+  geom_bar(aes(x = factor(animals, levels = animals), y = count, fill = factor(animals, levels = animals)), stat = 'identity') +
+  geom_hline(yintercept = sigma(chinese$count, 2)[1]) + geom_hline(yintercept = sigma(chinese$count, 2)[2]) +
   scale_fill_discrete(name = 'Animal', guide = F) +
   labs(x = 'Animal', y = 'Count', title = 'Chinese Zodiacs of Historical Astronomers') + 
   theme_minimal() + theme(axis.title.x = element_text(margin = margin(t = 10)))
@@ -93,36 +101,12 @@ ggplot(data = dates) +
 
 # Day of Week #
 
-short_term = data.frame(table(dates %>% filter(new_date > 1910) %>% select(dayofweek))) %>%
-  setNames(c('day', 'count')) %>%
-  slice(match(day[c(4,2,6,7,5,1,3)], day)) %>%
-  mutate(ratio = count / mean(count), term = 'short')
-
-long_term = data.frame(table(dates %>% filter(new_date < 1910) %>% select(dayofweek))) %>%
-  setNames(c('day', 'count')) %>%
-  slice(match(day[c(4,2,6,7,5,1,3)], day)) %>%
-  mutate(ratio = count / mean(count), term = 'long')
-
-all_term = data.frame(table(dates %>% select(dayofweek))) %>%
-  setNames(c('day', 'count')) %>%
-  slice(match(day[c(4,2,6,7,5,1,3)], day)) %>%
-  mutate(ratio = count / mean(count), term = 'all')
-
-comp_term = rbind(short_term, long_term, all_term)
-
-ggplot(data = comp_term) +
-  geom_bar(aes(x = factor(day, levels = day), y = ratio, fill = factor(term)), stat = 'identity', position = 'dodge') +
-  # scale_fill_discrete(name = 'Day of Week', guide = F) +
-  labs(x = 'Day of Week', y = 'Count', title = 'Birth Day of Historical Astronomers') + 
-  theme_minimal()
-
-
 week_df = data.frame(table(dates %>% select(dayofweek))) %>%
   setNames(c('day', 'count')) %>%
   slice(match(day[c(4,2,6,7,5,1,3)], day))
 
 ggplot(data = week_df) +
-  geom_bar(aes(x = factor(day, levels = week_df$day), y = count, fill = factor(day, levels = week_df$day)), stat = 'identity') +
+  geom_bar(aes(x = factor(day, levels = day), y = count, fill = factor(day, levels = day)), stat = 'identity') +
   geom_hline(yintercept = sigma(week_df$count, 2)[1]) + geom_hline(yintercept = sigma(week_df$count, 2)[2]) +
   scale_fill_discrete(name = 'Day of Week', guide = F) +
   labs(x = 'Day of Week', y = 'Count', title = 'Birth Day of Historical Astronomers') + 
@@ -131,6 +115,7 @@ ggplot(data = week_df) +
 
 
 # Astrological Zodiac #
+
 setwd('zodiac_images/')
 files = list.files()
 files = files[c(8,11,6,1,5,12,7,10,9,2,4,3)]
@@ -140,7 +125,7 @@ setwd('../')
 notes = lapply(seq(1,12), FUN = function(x) annotation_custom(imgs[[x]], xmin = x-.45, xmax = x+.45, ymin = 0, ymax = 10))
 
 
-ggplot(data = zodiac, aes(x = factor(sign, levels = sign[order(-count)]), y = count)) + 
+ggplot(data = zodiac, aes(x = factor(sign, levels = sign), y = count)) + 
   geom_bar(aes(fill = count), stat = 'identity') +
   notes + geom_hline(yintercept = sigma(zodiac$count, 2)[1]) + geom_hline(yintercept = sigma(zodiac$count, 2)[2]) +
   scale_fill_continuous(guide = F) +
