@@ -28,7 +28,7 @@ While we see a similar pattern (or lack there of) in the Chinese zodiac symbols 
 
 ![Day of Week](Images/dayofweek.png)
 
-When we break down the dates into the days of the week, we notice that 'Saturday' is *slightly* outside the 2-Sigma level. This could partly be explained by an [increase in births during the week][1], and will need to be controlled for during follow up investigations.
+When we break down the dates into the days of the week, we notice that 'Saturday' is *slightly* outside the 2-Sigma level. This could partly be explained by an [increase in births during the week][1], and will need to be investigated further.
 
 
 ### Further Analysis
