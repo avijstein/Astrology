@@ -18,7 +18,7 @@ The project intends to analyze the astrological symbols of famous astronomers. T
 
 ![Zodiac Distribution](Images/zodiacs.png)
 
-As we see above, there are no obvious anomalies popping out of the data. At the 2-Sigma level (horizontal black lines), we see that all zodiac categories fall with the range.
+As we see above, there are no obvious anomalies popping out of the data. At the 2-Sigma level (horizontal black lines), we see that all zodiac categories fall with the range. Follow up analysis will look into normalizing for the uneven birth distribution throughout the year.
 
 If we look at the Chinese zodiac instead, we find a point of interest:
 
@@ -35,8 +35,7 @@ When we break down the dates into the days of the week, we notice that 'Saturday
 
 **Day of Week:** Although there is a trend towards more weekday births, I don't believe this is a significant influence in this study. Studies of birth date patterns show both Sunday and Saturday with considerably fewer than expected birthdays, with Sunday more heavily depressed. The long-term studies I found traced this pattern back to 1910, but weren't able to gather sufficient data before then. I split my data into pre-1910 and post-1910 (about 36% of total) births and compared the ratio of births per day for each set. The pre-1910 data have fewer births on Sundays than expected, while post-1910 data have slightly more than average. Both show fewer Saturday births than expected, to varying degrees.
 
-
-
+**Chinese Zodiac:** The Chinese zodiacs seem to be the most difficult to explain, since their nature avoids seasonal variation. Patterns in the zodiac signs may be explained (under further analysis) by the uneven distribution of births over a year. However, since each Chinese zodiac covers an entire year, this is circumvented. With each zodiac repeating every 12 years, it's unlikely to be a generational difference either.
 
 
 
