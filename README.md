@@ -6,7 +6,7 @@ The project intends to analyze the astrological symbols of famous astronomers. T
 
 **Names:** After copying the list of astronomers into Excel, I used a manual version of regular expressions to grab just the names of the astronomers (this file is `justnames.csv`).
 
-**Wikipedia:** Using the wikipedia package for python, I gathered wikipedia pages with the list of names. I only collected the first sentence of each of the wikipedia articles, since the birthdate is almost always in the first sentence (if known). For some articles, the sentence ended abruptly, as the wikipedia package thought "Dr." was the complete sentence, rather than "Dr. Astronomer was born on 23 July 1922." However, these occurrences were relatively infrequent and didn't diminish the results significantly.
+**Wikipedia:** Using the wikipedia package for python, I gathered wikipedia pages with the list of names. I only collected the first sentence of each of the wikipedia articles, since the birthdate is almost always in the first sentence (if known). For some articles, the sentence ended abruptly, as the wikipedia package thought "Dr." was the complete sentence, rather than "Dr. Astronomer was born on 23 July 1922." However, these occurrences were relatively infrequent and only excluded a few astronomers.
 
 **Unicode:** A major roadblock was that the first sentence would often contain a unicode character that couldn't be parsed, and the code would throw a `UnicodeEncodingError`. Fortunately, I was able to have it ignore those characters, and improved the capture rate from 20.4% to 94% of articles.
 
